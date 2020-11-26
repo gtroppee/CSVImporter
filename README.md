@@ -1,3 +1,3 @@
 # README
 
-![Benchmark](https://github.com/gtroppee/CSVImporter/edit/master/data/benchmark.PNG?raw=true)
+![Benchmark](https://github.com/gtroppee/CSVImporter/blob/master/data/benchmark.PNG)
