@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Building, :focus, type: :model do
+RSpec.describe Building, type: :model do
   it_behaves_like "a versionable resource"
   it_behaves_like "an importable resource", {
     filtered_fields: described_class::FILTERED_FIELDS,

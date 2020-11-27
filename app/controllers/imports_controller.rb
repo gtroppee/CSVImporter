@@ -9,7 +9,7 @@ class ImportsController < ApplicationController
     @import = Import.new(import_params)
 
     if @import.save
-      render :new, notice: 'Import was successfully processed.'
+      redirect_to root_path, notice: 'Import was successfully processed.'
     else
       render :new
     end

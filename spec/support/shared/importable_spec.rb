@@ -15,8 +15,7 @@ RSpec.shared_examples "an importable resource" do |configuration|
     file
   end
 
-  let(:resource1) { described_class.find_or_create_by(reference: '1') }
-  let(:resource2) { described_class.find_or_create_by(reference: '2') }
+  let(:resource) { described_class.find_or_create_by(reference: '1') }
 
   subject { Import.new({ file: csv_file, type: described_class.to_s }) }
 
@@ -27,8 +26,12 @@ RSpec.shared_examples "an importable resource" do |configuration|
       end
     end
 
-    context 'when a record exists', :focus do
+    context 'when a record exists' do
       before { create(described_class.to_s.underscore.to_sym, reference: '1') }
+
+      it 'creates only the missing records' do
+        expect { subject.save }.to change(described_class, :count).by(1)
+      end
 
       describe 'fields filtering' do
         let(:rows) do
@@ -39,19 +42,19 @@ RSpec.shared_examples "an importable resource" do |configuration|
           context "when the given value has never been set for ##{field}" do
             it 'updates the existing record with the given value' do
               subject.save
-              expect(resource1.reload.public_send(field)).to eq('value1')
+              expect(resource.reload.public_send(field)).to eq('value1')
             end
           end
 
           context "when the given value has already been set for ##{field}" do
             before do 
-              resource1.update(field => 'value1')
-              resource1.update(field => 'value2') 
+              resource.update(field => 'value1')
+              resource.update(field => 'value2') 
             end
 
             it "does not update the existing record for ##{field}" do
               subject.save  
-              expect(resource1.reload.public_send(field)).to eq('value2')
+              expect(resource.reload.public_send(field)).to eq('value2')
             end
           end
         end
@@ -60,19 +63,19 @@ RSpec.shared_examples "an importable resource" do |configuration|
           context "when the given value has never been set for ##{field}" do
             it 'updates the existing record with the given value' do
               subject.save
-              expect(resource1.reload.public_send(field)).to eq('value1')
+              expect(resource.reload.public_send(field)).to eq('value1')
             end
           end
 
           context "when the given value has already been set for ##{field}" do
             before do 
-              resource1.update(field => 'value1')
-              resource1.update(field => 'value2') 
+              resource.update(field => 'value1')
+              resource.update(field => 'value2') 
             end
 
             it "updates the existing record for ##{field}" do
               subject.save  
-              expect(resource1.reload.public_send(field)).to eq('value1')
+              expect(resource.reload.public_send(field)).to eq('value1')
             end
           end
         end
