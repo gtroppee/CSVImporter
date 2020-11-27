@@ -3,4 +3,10 @@
 <%= render 'form', import: @import, type: 'Building' %>
 <%= render 'form', import: @import, type: 'Person' %>
 
+<div>
+  <h2>Stats</h2>
+  <b>Buildings count :</b><%= @buildings_count %>
+  <b>People count :</b><%= @people_count %>
+</div>
+
 <%= link_to 'Back', imports_path %>
