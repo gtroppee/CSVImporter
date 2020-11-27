@@ -27,3 +27,4 @@ Note: Almost all of the execution time is spent in the SQL transaction, very lit
 - Removing the import from the web process and splitting large files into multiple jobs
 - Improve/clarify specs
 - Add requests/controllers specs
+- Clean misc duplications (CSV generation for tests, AR overrides...)

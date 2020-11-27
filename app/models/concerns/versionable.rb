@@ -10,6 +10,11 @@ module Versionable
       super
     end
 
+    def self.upsert_all(attributes, returning: nil, unique_by: nil)
+      attributes.each do |attribute| attribute[:versions] = [attribute] end
+      super
+    end
+
     def version
       self.versions << attributes.except('versions')
     end
